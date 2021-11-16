@@ -1,6 +1,48 @@
+from datetime import date
+
 from django.shortcuts import render
 
 # Create your views here.
+
+# Dictionary with dummy data for posts including slug, title, created_date and author
+posts = [
+    {
+        "title": "My first post",
+        "slug": "my-first-post",
+        "date": date(2020, 1, 1),
+        "author": "John Doe",
+        "image": "kroniicopter.png",
+        "excert": "My first blog post",
+        "content": """Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor
+          explicabo sequi est officia modi, magni beatae quo iusto totam cum
+          alias laboriosam, maxime suscipit excepturi impedit qui dolorum esse
+          ipsum"""
+    },
+    {
+        "title": "My second post",
+        "slug": "my-second-post",
+        "date": date(2020, 1, 1),
+        "author": "Jane Doe",
+        "image": "kroniicopter.png",
+        "excert": "My second blog post",
+        "content": """Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor
+          explicabo sequi est officia modi, magni beatae quo iusto totam cum
+          alias laboriosam, maxime suscipit excepturi impedit qui dolorum esse
+          ipsum"""
+    },
+    {
+        "title": "My third post",
+        "slug": "my-third-post",
+        "date": date(2020, 1, 1),
+        "author": "Jack Doe",
+        "image": "kroniicopter.png",
+        "excert": "My third blog post",
+        "content": """Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor
+          explicabo sequi est officia modi, magni beatae quo iusto totam cum
+          alias laboriosam, maxime suscipit excepturi impedit qui dolorum esse
+          ipsum"""
+    }
+]
 
 
 def starting_page(request):
