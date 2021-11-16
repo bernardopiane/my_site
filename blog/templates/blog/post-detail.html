@@ -4,7 +4,25 @@
 {% block title %}This Post Title{% endblock title %} 
 
 {% block css_files %}
+<link rel="stylesheet" href="{% static 'blog/post-detail.css' %}">
 {% endblock css_files %}
 
 {% block content %}
+    <section id="summary">
+        <h2>Post Title</h2>
+        <article>
+            <img src="{% static 'blog/images/kroniicopter.png' %}" alt="Post title">
+            <div>
+                Last updated on <time>July 10th</time>
+            </div>
+            <address>By Author</address>
+        </article>
+    </section>
+
+    <main>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime quae perspiciatis dignissimos. Nihil odio autem delectus expedita architecto odit eius impedit explicabo aliquam itaque deserunt modi, sed cupiditate numquam labore?</p>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime quae perspiciatis dignissimos. Nihil odio autem delectus expedita architecto odit eius impedit explicabo aliquam itaque deserunt modi, sed cupiditate numquam labore?</p>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime quae perspiciatis dignissimos. Nihil odio autem delectus expedita architecto odit eius impedit explicabo aliquam itaque deserunt modi, sed cupiditate numquam labore?</p>
+    </main>
+
 {% endblock content %}
