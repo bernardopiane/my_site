@@ -2,16 +2,11 @@
 <li>
   <article class="post">
   {% comment %} Link for the post details page using the post slug {% endcomment %}
-    <a href="{% url 'post-detail-page' "the-mountains" %}">
-      <img src="{% static 'blog/images/1.png' %}" alt="Mountain Hiking" />
+    <a href="{% url 'post-detail-page' post.slug %}">
+      <img src="{% static 'blog/images/'|add:post.image %}" alt="{{ post.title }}" />
       <div class="post__content">
-        <h3>Mountain Hiking</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor
-          explicabo sequi est officia modi, magni beatae quo iusto totam cum
-          alias laboriosam, maxime suscipit excepturi impedit qui dolorum esse
-          ipsum.
-        </p>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.excert }}</p>
       </div>
     </a>
   </article>

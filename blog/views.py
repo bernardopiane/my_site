@@ -5,13 +5,13 @@ from django.shortcuts import render
 # Create your views here.
 
 # Dictionary with dummy data for posts including slug, title, created_date and author
-posts = [
+all_posts = [
     {
         "title": "My first post",
         "slug": "my-first-post",
         "date": date(2020, 1, 1),
         "author": "John Doe",
-        "image": "kroniicopter.png",
+        "image": "1.png",
         "excert": "My first blog post",
         "content": """Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor
           explicabo sequi est officia modi, magni beatae quo iusto totam cum
@@ -23,7 +23,7 @@ posts = [
         "slug": "my-second-post",
         "date": date(2020, 1, 1),
         "author": "Jane Doe",
-        "image": "kroniicopter.png",
+        "image": "2.jpg",
         "excert": "My second blog post",
         "content": """Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor
           explicabo sequi est officia modi, magni beatae quo iusto totam cum
@@ -35,18 +35,20 @@ posts = [
         "slug": "my-third-post",
         "date": date(2020, 1, 1),
         "author": "Jack Doe",
-        "image": "kroniicopter.png",
+        "image": "3.png",
         "excert": "My third blog post",
         "content": """Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor
           explicabo sequi est officia modi, magni beatae quo iusto totam cum
           alias laboriosam, maxime suscipit excepturi impedit qui dolorum esse
           ipsum"""
-    }
+    },
 ]
 
 
 def starting_page(request):
-    return render(request, 'blog/index.html')
+    sorted_posts = sorted(all_posts, key=lambda k: k['date'], reverse=True)
+    latest_posts = sorted_posts[-3:]
+    return render(request, 'blog/index.html', {'posts': latest_posts})
 
 
 def posts(request):
