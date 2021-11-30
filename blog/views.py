@@ -41,6 +41,7 @@ class PostDetailView(View):
         context = {
             "post": post,
             "comment_form": CommentForm(),
+            "comments": post.comments.all().order_by('-id'),
         }
         return render(request, self.template_name, context)
 
@@ -57,5 +58,6 @@ class PostDetailView(View):
             context = {
                 "post": post,
                 "comment_form": form,
+                "comments": post.comments.all().order_by('-id'),
             }
             return render(request, self.template_name, context)
