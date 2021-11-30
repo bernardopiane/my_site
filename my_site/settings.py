@@ -130,3 +130,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# Enable file upload to server
+MEDIA_ROOT = BASE_DIR / 'uploads'
+# Path the files are served to client (URL)
+MEDIA_URL = '/files/'
