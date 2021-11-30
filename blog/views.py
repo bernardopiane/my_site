@@ -4,23 +4,32 @@ from django.shortcuts import get_object_or_404, render
 
 from .models import Post
 
+# Import TemplateView from django.views.generic
+from django.views.generic import TemplateView, ListView, DetailView
+
 # Create your views here.
 
-# Dictionary with dummy data for posts including slug, title, created_date and author
-all_posts = []
+
+class StartingPageView(ListView):
+    model = Post
+    template_name = 'blog/index.html'
+    context_object_name = 'posts'
+    ordering = ['-date']
+    # Fetch the 3 latests posts
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        data = queryset[:3]
+        return data
 
 
-def starting_page(request):
-    # Fetch the 3 latest posts
-    latest_posts = Post.objects.all().order_by('-date')[:3]
-    return render(request, 'blog/index.html', {'posts': latest_posts})
+class AllPostsView(ListView):
+    model = Post
+    template_name = 'blog/all-posts.html'
+    context_object_name = 'posts'
+    ordering = ['-date']
 
 
-def posts(request):
-    all_posts = Post.objects.all().order_by('-date')
-    return render(request, 'blog/all-posts.html', {'posts': all_posts})
-
-
-def post_detail(request, slug):
-    post_by_slug = get_object_or_404(Post, slug=slug)
-    return render(request, 'blog/post-detail.html', {'post': post_by_slug})
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/post-detail.html'

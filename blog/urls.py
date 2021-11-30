@@ -6,8 +6,9 @@ from . import views
 
 
 urlpatterns = [
-    path("", views.starting_page, name="starting-page"),
-    path("posts", views.posts, name="posts-page"),
+    path("", views.StartingPageView.as_view(), name="starting-page"),
+    path("posts", views.AllPostsView.as_view(), name="posts-page"),
     # Path to the post slug (e.g. /posts/my-first-post)
-    path("posts/<slug:slug>", views.post_detail, name="post-detail-page"),
+    path("posts/<slug:slug>", views.PostDetailView.as_view(),
+         name="post-detail-page"),
 ]
