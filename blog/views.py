@@ -3,6 +3,7 @@ from datetime import date
 from django.shortcuts import get_object_or_404, render
 
 from .models import Post
+from .forms import CommentForm
 
 # Import TemplateView from django.views.generic
 from django.views.generic import TemplateView, ListView, DetailView
@@ -33,3 +34,8 @@ class AllPostsView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post-detail.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        return context
