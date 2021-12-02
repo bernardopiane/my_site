@@ -25,7 +25,11 @@
             {% endfor %}
         </div>
         <div id="read-later">
-            <button>Read Later</button>
+            <form action="{% url 'read-later-page' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ post.id }}" name="post_id">
+                <button>Read Later</button>
+            </form>
         </div>
         <article>
             <img src="{{post.image.url}}" alt="{{post.title}}">
