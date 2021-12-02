@@ -36,12 +36,21 @@ class AllPostsView(ListView):
 class PostDetailView(View):
     template_name = 'blog/post-detail.html'
 
+    def is_stored_post(self, request, post_id):
+        stored_posts = request.session.get('stored_posts', [])
+        if stored_posts is not None:
+            is_saved_for_later = post_id in stored_posts
+        else:
+            is_saved_for_later = False
+        return is_saved_for_later
+
     def get(self, request, *args, **kwargs):
         post = get_object_or_404(Post, slug=kwargs['slug'])
         context = {
             "post": post,
             "comment_form": CommentForm(),
             "comments": post.comments.all().order_by('-id'),
+            "saved_for_later": self.is_stored_post(request, post.id)
         }
         return render(request, self.template_name, context)
 
@@ -59,6 +68,7 @@ class PostDetailView(View):
                 "post": post,
                 "comment_form": form,
                 "comments": post.comments.all().order_by('-id'),
+                "saved_for_later": self.is_stored_post(request, post.id)
             }
             return render(request, self.template_name, context)
 
@@ -67,7 +77,7 @@ class ReadLaterView(View):
     # Displays all stored posts
     def get(self, request, *args, **kwargs):
         stored_posts = request.session.get('stored_posts')
-        
+
         context = {}
 
         if stored_posts is None or len(stored_posts) == 0:
@@ -78,10 +88,8 @@ class ReadLaterView(View):
             posts = Post.objects.filter(id__in=stored_posts)
             context['posts'] = posts
             context['has_posts'] = True
-            
+
         return render(request, 'blog/stored-posts.html', context)
-            
-            
 
     def post(self, request, *args, **kwargs):
         stored_posts = request.session.get('stored_posts')
@@ -95,7 +103,10 @@ class ReadLaterView(View):
         if post_id not in stored_posts:
             # stored_posts.append(kwargs['id'])
             stored_posts.append(post_id)
-            # Save the new data to session
-            request.session['stored_posts'] = stored_posts
+        else:
+            # Remove the post from the list
+            stored_posts.remove(post_id)
+
+        request.session['stored_posts'] = stored_posts
 
         return HttpResponseRedirect("/")
