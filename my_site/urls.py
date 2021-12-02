@@ -22,6 +22,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Include pages from blog app
     path("", include('blog.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
-    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-# Servers static files in production (only should be used on small projects)
+]
