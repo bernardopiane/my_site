@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
+# Access to enviroment variables
+from os import getenv 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,13 +28,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-l+p(c7isc90^qi^$rnl3ztw*jn%na*dy-(6i^shyh573!*9n^6'
+# SECRET_KEY =  getenv('SECRET_KEY')
 # Change to env variable
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = getenv("IS_DEVELOPMENT", True)
 
 ALLOWED_HOSTS = [
-    
+    getenv('APP_HOST'),
+    'localhost',
+    '127.0.0.1'
 ]
 
 
@@ -81,9 +91,15 @@ WSGI_APPLICATION = 'my_site.wsgi.application'
 
 # Changed databse to postgresql
 DATABASES = {
+    # Connect to Amazon AWS RDS Postgresql
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'djangoblog',
+        'NAME': 'postgres',
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
